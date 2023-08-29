@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "company": "XYZ Logistics",
+    "vehicleType": "truck",
+    "startPoint": "123 Main St, CityA",
+    "endPoint": "456 Elm St, CityB",
+    "initialDate": "2023-08-14",
+    "price": 150
+    
+  },
+  {
+    "id": 2,
+    "company": "ABC Transport",
+    "vehicleType": "van",
+    "startPoint": "789 Maple St, CityC",
+    "endPoint": "101 Pine St, CityD",
+    "initialDate": "2023-08-15",
+    "price": 75.5
+  },
+  {
+    "id": 3,
+    "company": "PQR Freight",
+    "vehicleType": "motorcycle",
+    "startPoint": "50 Oak St, CityE",
+    "endPoint": "602 Birch St, CityF",
+    "initialDate": "2023-08-16",
+    "price": 35.25
+  },
+  {
+    "id": 4,
+    "company": "LMN Shipments",
+    "vehicleType": "truck",
+    "startPoint": "33 Cedar St, CityG",
+    "endPoint": "998 Willow St, CityH",
+    "initialDate": "2023-08-17",
+    "price": 160.75
+  },
+  {
+    "id": 5,
+    "company": "GHI Couriers",
+    "vehicleType": "van",
+    "startPoint": "202 Cherry St, CityI",
+    "endPoint": "501 Poplar St, CityJ",
+    "initialDate": "2023-08-18",
+    "price": 95
+  },
+  {
+    "id": 6,
+    "company": "DEF Deliveries",
+    "vehicleType": "bike",
+    "startPoint": "410 Palm St, CityK",
+    "endPoint": "777 Spruce St, CityL",
+    "initialDate": "2023-08-19",
+    "price": 45.3
+  }
+]
