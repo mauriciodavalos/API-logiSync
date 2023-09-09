@@ -6,6 +6,8 @@ const {
   getOneRuta,
   updateOneRuta,
   deleteOneRuta,
+  getRutaStats,
+  getAllRutasVigentes,
 } = require('../controllers/rutaControllers');
 
 //Param middleware
@@ -18,6 +20,9 @@ rutaRouter
   .route('/')
   .get(getAllRutas)
   .post(createOneRuta);
+
+rutaRouter.route('/ruta-stats').get(getRutaStats);
+rutaRouter.route('/rutas-vigentes').get(getAllRutasVigentes);
 
 rutaRouter
   .route('/:id')

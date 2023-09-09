@@ -3,7 +3,6 @@ const Ruta = require('../models/rutaModel');
 //2) Handlers - Controllers
 const getAllRutas = async (req, res) => {
   try {
-    console.log(req.query);
     //Build Query
     //1) Filtering
     const queryObj = { ...req.query }; //New Object
@@ -130,10 +129,59 @@ const deleteOneRuta = async (req, res) => {
   }
 };
 
+//MONGODB Agrregation Pipeline
+const getRutaStats = async (req, res) => {
+  try {
+    const stats = await Ruta.aggregate([
+      {
+        $match: { startPoint: 'Queretaro' },
+      },
+      {
+        $group: {
+          _id: '$endPoint',
+          numRutas: { $sum: 1 },
+          avgPrice: { $avg: '$price' },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: stats,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'fail',
+      message: error,
+    });
+  }
+};
+const getAllRutasVigentes = async (req, res) => {
+  try {
+    const stats = await Ruta.aggregate([
+      {
+        $match: { initialDate: { $gte: new Date() } },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: stats,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'fail',
+      message: error,
+    });
+  }
+};
+
 module.exports = {
   getAllRutas,
   createOneRuta,
   getOneRuta,
   updateOneRuta,
   deleteOneRuta,
+  getRutaStats,
+  getAllRutasVigentes,
 };
