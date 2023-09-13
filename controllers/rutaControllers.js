@@ -1,4 +1,5 @@
 const Ruta = require('../models/rutaModel');
+const AppError = require('../utils/appError');
 
 //2) Handlers - Controllers
 const getAllRutas = async (req, res) => {
@@ -63,7 +64,7 @@ const getAllRutas = async (req, res) => {
     });
   }
 };
-const createOneRuta = async (req, res) => {
+const createOneRuta = async (req, res, next) => {
   try {
     const newRuta = await Ruta.create(req.body);
 
@@ -75,18 +76,19 @@ const createOneRuta = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({
-      status: 'Fail',
-      message: 'Fail to create Ruta',
-      error,
-    });
+    next(new AppError(error.message, 404, error));
   }
 };
-const updateOneRuta = async (req, res) => {
+const updateOneRuta = async (req, res, next) => {
   try {
     const ruta = await Ruta.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
+      runValidators: true,
     });
+
+    if (!ruta) {
+      return next(new AppError('No Tour found with that ID', 404));
+    }
 
     res.status(201).json({
       status: 'Success',
@@ -95,12 +97,16 @@ const updateOneRuta = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({ status: 'Fail', message: 'fail to update ruta' });
+    next(new AppError(error.message, 404, error));
   }
 };
-const getOneRuta = async (req, res) => {
+const getOneRuta = async (req, res, next) => {
   try {
     const ruta = await Ruta.findById(req.params.id);
+
+    if (!ruta) {
+      return next(new AppError('No Tour found with that ID', 404));
+    }
 
     res.status(200).json({
       status: 'success',
@@ -109,23 +115,23 @@ const getOneRuta = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(404).json({
-      status: 'Fail',
-      message: 'Fail to get One Ruta',
-      error,
-    });
+    next(new AppError(error.message, 404, error));
   }
 };
-const deleteOneRuta = async (req, res) => {
+const deleteOneRuta = async (req, res, next) => {
   try {
-    await Ruta.findByIdAndDelete(req.params.id, { new: true });
+    const ruta = await Ruta.findByIdAndDelete(req.params.id, { new: true });
+
+    if (!ruta) {
+      return next(new AppError('No Tour found with that ID', 404));
+    }
 
     res.status(204).json({
       status: 'success',
       data: null,
     });
   } catch (error) {
-    res.status(400).json({ status: 'Fail', message: 'fail to delete Tour' });
+    next(new AppError(error.message, 404, error));
   }
 };
 
