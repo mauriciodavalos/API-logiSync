@@ -7,6 +7,10 @@ const {
   createUser,
   deleteUser,
 } = require('../controllers/userControllers');
+const { signup, login } = require('../controllers/authController');
+
+userRouter.post('/signup', signup);
+userRouter.post('/login', login);
 
 userRouter
   .route('/')
