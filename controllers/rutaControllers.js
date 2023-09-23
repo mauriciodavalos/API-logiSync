@@ -2,7 +2,7 @@ const Ruta = require('../models/rutaModel');
 const AppError = require('../utils/appError');
 
 //2) Handlers - Controllers
-const getAllRutas = async (req, res) => {
+const getAllRutas = async (req, res, next) => {
   try {
     //Build Query
     //1) Filtering
@@ -46,6 +46,7 @@ const getAllRutas = async (req, res) => {
 
     //Execute Query
     const rutas = await query;
+    console.log(req.user);
 
     //Send response
     res.status(200).json({
@@ -57,16 +58,17 @@ const getAllRutas = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({
-      status: 'Fail',
-      message: 'Fail to get All Rutas',
-      error,
-    });
+    next(new AppError(error.message, 404, error));
   }
 };
 const createOneRuta = async (req, res, next) => {
   try {
-    const newRuta = await Ruta.create(req.body);
+    const { company, id } = req.user;
+
+    const preRuta = await { ...req.body, company, userId: id };
+    console.log(preRuta);
+
+    const newRuta = await Ruta.create(preRuta);
 
     res.status(201).json({
       status: 'success',

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const rutasSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, required: true },
   company: {
     type: String,
     required: true,
@@ -29,7 +30,7 @@ const rutasSchema = new mongoose.Schema({
   initialDate: {
     type: Date,
     required: true,
-    min: new Date(),
+    min: [new Date(), 'Please provide a Valid Date'],
   },
   price: {
     type: Number,

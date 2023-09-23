@@ -9,6 +9,7 @@ const {
   getRutaStats,
   getAllRutasVigentes,
 } = require('../controllers/rutaControllers');
+const { protect, restrictTo } = require('../controllers/authController');
 
 //Param middleware
 rutaRouter.param('id', (req, res, next, val) => {
@@ -18,8 +19,8 @@ rutaRouter.param('id', (req, res, next, val) => {
 
 rutaRouter
   .route('/')
-  .get(getAllRutas)
-  .post(createOneRuta);
+  .get(protect, restrictTo('admin', 'lead-transportista'), getAllRutas)
+  .post(protect, restrictTo('admin', 'lead-transportista'), createOneRuta);
 
 rutaRouter.route('/ruta-stats').get(getRutaStats);
 rutaRouter.route('/rutas-vigentes').get(getAllRutasVigentes);

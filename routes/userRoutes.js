@@ -6,11 +6,27 @@ const {
   updateUser,
   createUser,
   deleteUser,
+  updateMe,
+  deleteMe,
 } = require('../controllers/userControllers');
-const { signup, login } = require('../controllers/authController');
+const {
+  signup,
+  login,
+  forgotPassword,
+  resetPassword,
+  updatePassword,
+  protect,
+} = require('../controllers/authController');
 
 userRouter.post('/signup', signup);
 userRouter.post('/login', login);
+
+userRouter.post('/forgotPassword', forgotPassword);
+userRouter.patch('/resetPassword/:token', resetPassword);
+userRouter.patch('/updatePassword', protect, updatePassword);
+
+userRouter.patch('/updateME', protect, updateMe);
+userRouter.patch('/deleteME', protect, deleteMe);
 
 userRouter
   .route('/')
