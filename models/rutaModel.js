@@ -16,16 +16,18 @@ const rutasSchema = new mongoose.Schema({
     enum: ['truck', 'car', 'bike', 'van'], // Add or modify vehicle types as needed
   },
   startPoint: {
-    type: String,
-    required: true,
+    //GeoJSON
+    type: { type: String, default: 'Point', enum: ['Point'] },
+    coordinates: [Number],
+    address: String,
+    description: String,
   },
-  // startPointCP: {
-  //   type: String,
-  //   required: true,
-  // },
   endPoint: {
-    type: String,
-    required: true,
+    //GeoJSON
+    type: { type: String, default: 'Point', enum: ['Point'] },
+    coordinates: [Number],
+    address: String,
+    description: String,
   },
   initialDate: {
     type: Date,

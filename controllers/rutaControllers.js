@@ -46,7 +46,6 @@ const getAllRutas = async (req, res, next) => {
 
     //Execute Query
     const rutas = await query;
-    console.log(req.user);
 
     //Send response
     res.status(200).json({
@@ -66,7 +65,6 @@ const createOneRuta = async (req, res, next) => {
     const { company, id } = req.user;
 
     const preRuta = await { ...req.body, company, userId: id };
-    console.log(preRuta);
 
     const newRuta = await Ruta.create(preRuta);
 

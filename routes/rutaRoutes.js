@@ -19,7 +19,7 @@ rutaRouter.param('id', (req, res, next, val) => {
 
 rutaRouter
   .route('/')
-  .get(protect, restrictTo('admin', 'lead-transportista'), getAllRutas)
+  .get(protect, restrictTo('admin', 'lead-transportista', 'user'), getAllRutas)
   .post(protect, restrictTo('admin', 'lead-transportista'), createOneRuta);
 
 rutaRouter.route('/ruta-stats').get(getRutaStats);
